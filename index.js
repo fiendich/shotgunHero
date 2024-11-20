@@ -5,34 +5,8 @@ const CANVAS_WIDTH = canvas.width = 700; //set your canvas width...
 const CANVAS_HEIGHT = canvas.height = 860;
 
 const GRAVITY = 0.5
-class Player {
-    constructor(position) {
-        this.position = position
-        this.velocity = {
-            x: 0,
-            y: 1,
-        }
-        this.height = 100
-    }
 
-    draw () {
-        ctx.fillStyle = "red"
-        ctx.fillRect(this.position.x, this.position.y, 100, 100)
-    }
 
-    update() {
-        this.draw()
-        this.position.x += this.velocity.x
-        if (this.position.y + this.height + this.velocity.y < CANVAS_HEIGHT) {
-            this.velocity.y += GRAVITY
-        }
-        else {
-            this.velocity.y = 0
-        }
-            this.position.y += this.velocity.y
-        this.velocity.y += GRAVITY
-    }
-}
 
 const player = new Player({
     x: 0,
@@ -51,10 +25,20 @@ const keys = {
         pressed: false,
     },
 }
+
+const background = new Sprite({
+    position: {
+    x: 0,
+    y: 0,
+},
+imageSrc: "assets/images/floors/floor_1.jpg",
+})
 function animate() {
 
     window.requestAnimationFrame(animate)
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    background.update()
+
     player.update()
     player2.update()
     
