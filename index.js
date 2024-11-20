@@ -9,13 +9,15 @@ const GRAVITY = 0.5
 
 
 const player = new Player({
-    x: 0,
-    y: 0,
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: "./assets/images/character/idle.png",
+    frameRate: 6,
+    isCharacter: true
 })
-const player2 = new Player({
-    x: 300,
-    y: 100,
-})
+
 
 const keys = {
     d: {
@@ -28,10 +30,10 @@ const keys = {
 
 const background = new Sprite({
     position: {
-    x: 0,
-    y: 0,
-},
-imageSrc: "assets/images/floors/floor_1.jpg",
+        x: 0,
+        y: 0,
+    },
+    imageSrc: "assets/images/floors/floor_1.jpg",  
 })
 function animate() {
 
@@ -40,7 +42,6 @@ function animate() {
     background.update()
 
     player.update()
-    player2.update()
     
     player.velocity.x = 0
     if (keys.d.pressed) player.velocity.x = 5

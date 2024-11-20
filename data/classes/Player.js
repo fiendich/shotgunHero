@@ -1,5 +1,6 @@
-class Player {
-    constructor(position) {
+class Player extends Sprite {
+    constructor({position, imageSrc, frameRate}) {
+        super({imageSrc, frameRate})
         this.position = position
         this.velocity = {
             x: 0,
@@ -8,13 +9,10 @@ class Player {
         this.height = 100
     }
 
-    draw () {
-        ctx.fillStyle = "red"
-        ctx.fillRect(this.position.x, this.position.y, 100, this.height)
-    }
-
     update() {
-        console.log(this.position.y, " | ", this.velocity.y)
+        this.updateFrames()
+        ctx.fillStyle = "rgba(0, 255, 0, 0.2)"
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
         this.draw();
         
         this.position.x += this.velocity.x
