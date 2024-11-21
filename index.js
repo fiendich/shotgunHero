@@ -26,7 +26,7 @@ const shotgun = new Shotgun({
     frameRate: 14,
 
 })
-
+// asd
 const keys = {
     d: {
         pressed: false,
