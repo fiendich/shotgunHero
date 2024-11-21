@@ -15,9 +15,17 @@ const player = new Player({
     },
     imageSrc: "./assets/images/character/idle.png",
     frameRate: 6,
-    isCharacter: true
 })
 
+const shotgun = new Shotgun({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: "./assets/images/shotgun/Weapon/shooting_chamber_closed.png",
+    frameRate: 14,
+
+})
 
 const keys = {
     d: {
@@ -42,6 +50,7 @@ function animate() {
     background.update()
 
     player.update()
+    shotgun.update()
     
     player.velocity.x = 0
     if (keys.d.pressed) player.velocity.x = 5
