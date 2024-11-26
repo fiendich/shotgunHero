@@ -9,9 +9,9 @@ class Sprite {
         this.image.src = imageSrc
         this.frameRate = frameRate
         this.currentFrame = 0
-        this.frameBuffer = 3
+        this.frameBuffer = 5
         this.elapsedFrames = 0
-    }
+    }d
 
     draw() {
         if (!this.image) return

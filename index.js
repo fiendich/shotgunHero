@@ -22,8 +22,8 @@ const shotgun = new Shotgun({
         x: 0,
         y: 0,
     },
-    imageSrc: "./assets/images/shotgun/Weapon/shooting_chamber_closed.png",
-    frameRate: 14,
+    imageSrc: "./assets/images/shotgun/Weapon/idle.png",
+    frameRate: 15,
 
 })
 
@@ -49,7 +49,6 @@ let mouse_X, mouse_Y
 window.addEventListener('mousemove', (e) => {
     mouse_X = e.offsetX
     mouse_Y = e.offsetY
-    console.log(e)
 })
     
 
@@ -61,6 +60,7 @@ function animate() {
 
     player.update()
     shotgun.update()
+    console.log(player.velocity.y)
     
     //console.log(mouse_X, mouse_Y);
 

@@ -29,6 +29,7 @@ class Shotgun {
     
         ctx.setTransform(1, 0, 0, 1, x, y)
         ctx.rotate(Math.atan2(looky - y, lookx - x))
+        console.log(Math.atan2(looky - y, lookx - x))
         ctx.drawImage(
             img,
             cropbox.position.x, cropbox.position.y,
