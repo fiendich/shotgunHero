@@ -12,8 +12,9 @@ class Shotgun {
         this.elapsedFrames = 0;
         this.position = position;
         this.degrees = 90;
+        this.lookRadian;
     }
-
+    
     drawSpriteLookat(img, x, y, lookx, looky) {
         const cropbox = {
             position: {
@@ -29,7 +30,8 @@ class Shotgun {
     
         ctx.setTransform(1, 0, 0, 1, x, y)
         ctx.rotate(Math.atan2(looky - y, lookx - x))
-        console.log(Math.atan2(looky - y, lookx - x))
+        this.lookRadian = Math.atan2(looky - y, lookx - x)
+        //console.log(Math.atan2(looky - y, lookx - x))
         ctx.drawImage(
             img,
             cropbox.position.x, cropbox.position.y,
@@ -41,8 +43,16 @@ class Shotgun {
     }
     
     shoot() {
+        let acceleration = 15
+        let addVelocityX = 0, addVelocityY = 0 
+
+        addVelocityX = - Math.cos(this.lookRadian) * acceleration
+        addVelocityY = - Math.sin(this.lookRadian) * acceleration
         
-        player.velocity.y = -15
+        
+        player.velocity.x += addVelocityX
+        player.velocity.y = addVelocityY
+        console.log(addVelocityX, addVelocityY)
     }
 
     update() {

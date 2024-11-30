@@ -4,9 +4,14 @@ const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = canvas.width = 700; //set your canvas width...
 const CANVAS_HEIGHT = canvas.height = 860;
 
+floor1Collisions.forEach((row) => {
+    row.forEach((symbol => {
+        if (symbol != 0) {
+            console.log("draw")
+        }
+    }))
+})
 const GRAVITY = 0.5
-
-
 
 const player = new Player({
     position: {
@@ -41,7 +46,7 @@ const background = new Sprite({
         x: 0,
         y: 0,
     },
-    imageSrc: "assets/images/floors/floor_1.jpg",  
+    imageSrc: "assets/images/floors/floor1.png",  
 })
 
 let mouse_X, mouse_Y
@@ -60,45 +65,24 @@ function animate() {
 
     player.update()
     shotgun.update()
-    console.log(player.velocity.y)
     
     //console.log(mouse_X, mouse_Y);
 
-    player.velocity.x = 0
-    if (keys.d.pressed) player.velocity.x = 5
-        else if (keys.a.pressed) player.velocity.x = -5
+
 }
 animate()
 
-window.addEventListener("keydown", (event) => {
-    switch (event.key) {
-        case "d":
-            keys.d.pressed = true
-            break
 
-        case "a":
-            keys.a.pressed = true
-            break    
 
-        case "w":
-            shotgun.shoot()
-            break    
-    }    
+addEventListener("click", (event) => {
+    shotgun.shoot()
+});
+
+addEventListener("keydown", (event) => {
+    if (event.code === "Space") {
+        shotgun.shoot()
+    }
 })
-
-window.addEventListener("keyup", (event) => {
-    switch (event.key) {
-        case "d":
-            keys.d.pressed = false
-            break
-
-        case "a":
-            keys.a.pressed = false
-            break 
-    }   
-})
-
-
 
 
 

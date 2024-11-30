@@ -15,7 +15,7 @@ class Player extends Sprite {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
         this.draw();
         
-        this.position.x += this.velocity.x
+        this.position.x += this.velocity.x 
         this.position.y += this.velocity.y
         
         if (this.position.y + this.height < CANVAS_HEIGHT) {
@@ -23,6 +23,6 @@ class Player extends Sprite {
         }
         else {
             this.velocity.y = 0
-        }
+        } 
     }
 }
