@@ -43,6 +43,7 @@ class Shotgun {
     }
     
     shoot() {
+        player.isGrounded = false
         let acceleration = 15
         let addVelocityX = 0, addVelocityY = 0 
 
