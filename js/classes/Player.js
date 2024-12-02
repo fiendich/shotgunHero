@@ -34,7 +34,7 @@ class Player extends Sprite {
         if (this.image === this.animations[key].image){
             return
         } 
-
+        
         this.image = this.animations[key].image
 
     }
@@ -55,6 +55,7 @@ class Player extends Sprite {
         )
         
         this.draw()
+        console.log(this.frameRate)
         
         this.position.x += this.velocity.x
         this.updateHitbox()
@@ -63,15 +64,22 @@ class Player extends Sprite {
             this.isGrounded = false
         }
         if (this.isGrounded) {
-            this.switchSprite("Idle")
+            if (this.velocity.x != 0){
+                this.switchSprite("Stop")
+            }
+            else {
+                this.switchSprite("Idle")
+                
+            }
         }
         else {
             this.switchSprite("Fall")
         }
         this.applyGravity()
+        this.applyTractionX()
         this.updateHitbox()
         this.checkForVerticalCollisions()
-        console.log(this.isGrounded)
+        // console.log(this.isGrounded)
     }
 
     updateHitbox() {
@@ -122,12 +130,31 @@ class Player extends Sprite {
         this.velocity.y += GRAVITY
     }
 
+    applyTractionX() {
+        //console.log(this.velocity.x);
+        
+        let groundedMultiplier = this.isGrounded ? 0.6 : 0.1;
+    
+        if (Math.abs(this.velocity.x) <= TRACTIONX * groundedMultiplier) {
+            this.velocity.x = 0;
+        }
+        
+        else if (this.velocity.x > 0) {
+            this.velocity.x -= TRACTIONX * groundedMultiplier;
+        }
+        else {
+            this.velocity.x += TRACTIONX * groundedMultiplier;
+        }
+    }
+    
+        
+
     checkForVerticalCollisions() {
         
 
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const collisionBlock = this.collisionBlocks[i]
-            console.log(this.velocity.y)
+            //console.log(this.velocity.y)
             
             
             

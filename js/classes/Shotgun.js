@@ -51,7 +51,7 @@ class Shotgun {
         addVelocityY = - Math.sin(this.lookRadian) * acceleration
         
         
-        player.velocity.x += addVelocityX
+        player.velocity.x = addVelocityX
         player.velocity.y = addVelocityY
         console.log(addVelocityX, addVelocityY)
     }

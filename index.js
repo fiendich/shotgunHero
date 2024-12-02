@@ -27,6 +27,7 @@ floor1Collisions.forEach((row, y) => {
 
 
 const GRAVITY = 0.5
+const TRACTIONX = 1
 
 const player = new Player({
     position: {
@@ -34,7 +35,7 @@ const player = new Player({
         y: 400,
     },
     collisionBlocks: collisionBlocks1,
-    imageSrc: "./assets/images/character/idle.png",
+    imageSrc: "./assets/images/character/stop.png",
     frameRate: 6,
     animations: {
         Idle: {
@@ -44,6 +45,10 @@ const player = new Player({
         Fall: {
             imageSrc: "./assets/images/character/fall.png",
             frameRate: 6,
+        },
+        Stop: {
+            imageSrc: "./assets/images/character/stop.png",
+            frameRate: 4,
         },
     },
 })
