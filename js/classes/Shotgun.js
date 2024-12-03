@@ -13,6 +13,7 @@ class Shotgun {
         this.position = position;
         this.degrees = 90;
         this.lookRadian;
+        this.shotsLeft = 2;
     }
     
     drawSpriteLookat(img, x, y, lookx, looky) {
@@ -43,17 +44,24 @@ class Shotgun {
     }
     
     shoot() {
-        player.isGrounded = false
-        let acceleration = 15
-        let addVelocityX = 0, addVelocityY = 0 
+        
+        if (this.shotsLeft != 0) {
+            player.isGrounded = false
+            this.shotsLeft -= 1
+            let acceleration = 15
+            let addVelocityX = 0, addVelocityY = 0 
 
-        addVelocityX = - Math.cos(this.lookRadian) * acceleration
-        addVelocityY = - Math.sin(this.lookRadian) * acceleration
-        
-        
-        player.velocity.x = addVelocityX
-        player.velocity.y = addVelocityY
-        console.log(addVelocityX, addVelocityY)
+            addVelocityX = - Math.cos(this.lookRadian) * acceleration
+            addVelocityY = - Math.sin(this.lookRadian) * acceleration
+            
+            
+            player.velocity.x = addVelocityX
+            player.velocity.y = addVelocityY
+            console.log(addVelocityX, addVelocityY)
+        }
+        else {
+            console.log("no shots left")
+        }
     }
 
     update() {

@@ -28,13 +28,15 @@ class Player extends Sprite {
 
             this.animations[key].image = image
         }
+
+        this.frameRate = 6
     }
 
     switchSprite(key) {
         if (this.image === this.animations[key].image){
             return
         } 
-        
+        this.frameRate = this.animations[key].frameRate
         this.image = this.animations[key].image
 
     }
@@ -64,7 +66,8 @@ class Player extends Sprite {
             this.isGrounded = false
         }
         if (this.isGrounded) {
-            if (this.velocity.x != 0){
+            shotgun.shotsLeft = 2
+            if (this.velocity.x != 0) {
                 this.switchSprite("Stop")
             }
             else {
