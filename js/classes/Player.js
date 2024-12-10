@@ -38,8 +38,9 @@ class Player extends Sprite {
         } 
         this.frameRate = this.animations[key].frameRate
         this.image = this.animations[key].image
-
+        this.currentFrame = 0
     }
+
     update() {
         
         this.updateFrames()
@@ -57,7 +58,7 @@ class Player extends Sprite {
         )
         
         this.draw()
-        console.log(this.frameRate)
+        
         
         this.position.x += this.velocity.x
         this.updateHitbox()
@@ -66,7 +67,6 @@ class Player extends Sprite {
             this.isGrounded = false
         }
         if (this.isGrounded) {
-            shotgun.shotsLeft = 2
             if (this.velocity.x != 0) {
                 this.switchSprite("Stop")
             }

@@ -1,5 +1,5 @@
 class Shotgun {
-    constructor({ position, imageSrc, frameRate }) {
+    constructor({ position, imageSrc, frameRate, animations }) {
         this.image = new Image();
         this.image.onload = () => {
             this.width = this.image.width / this.frameRate;
@@ -13,9 +13,35 @@ class Shotgun {
         this.position = position;
         this.degrees = 90;
         this.lookRadian;
-        this.shotsLeft = 2;
+        this.shotsLeft = 0; // Start with no shots loaded
+        this.maxShots = 2; // Maximum shots after reload
+        this.animations = animations;
+        this.isReloading = false;
+        this.reloadCycles = 0; // Tracks how many reload animations completed
+        this.targetReloadCycles = 2; // Reload completes after this many cycles
+        this.partialReload = false; // Tracks if mid-reload shooting happens
+
+        for (let key in this.animations) {
+            const image = new Image();
+            image.src = this.animations[key].imageSrc;
+            this.animations[key].image = image;
+        }
     }
-    
+
+    switchSprite(key) {
+        if (!this.animations[key]) {
+            console.log(`Animation '${key}' does not exist.`);
+            return;
+        }
+        if (this.image === this.animations[key].image) {
+            return;
+        }
+        this.frameRate = this.animations[key].frameRate;
+        this.image = this.animations[key].image;
+        this.currentFrame = 0;
+        this.frameBuffer = this.animations[key].frameBuffer;
+    }
+
     drawSpriteLookat(img, x, y, lookx, looky) {
         const cropbox = {
             position: {
@@ -25,14 +51,16 @@ class Shotgun {
             width: img.width / this.frameRate,
             height: img.height
         };
-    
-        const centerX = cropbox.width / 2 - 30
-        const centerY = cropbox.height / 2
-    
-        ctx.setTransform(1, 0, 0, 1, x, y)
-        ctx.rotate(Math.atan2(looky - y, lookx - x))
-        this.lookRadian = Math.atan2(looky - y, lookx - x)
-        //console.log(Math.atan2(looky - y, lookx - x))
+
+        let centerX = cropbox.width / 2 - 30;
+        if (this.isReloading) {
+            centerX += 16;
+        }
+        let centerY = cropbox.height / 2;
+
+        ctx.setTransform(1, 0, 0, 1, x, y);
+        ctx.rotate(Math.atan2(looky - y, lookx - x));
+        this.lookRadian = Math.atan2(looky - y, lookx - x);
         ctx.drawImage(
             img,
             cropbox.position.x, cropbox.position.y,
@@ -40,45 +68,70 @@ class Shotgun {
             -centerX, -centerY,
             cropbox.width, cropbox.height
         );
-        ctx.setTransform(1, 0, 0, 1, 0, 0)
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
-    
-    shoot() {
-        
-        if (this.shotsLeft != 0) {
-            player.isGrounded = false
-            this.shotsLeft -= 1
-            let acceleration = 15
-            let addVelocityX = 0, addVelocityY = 0 
 
-            addVelocityX = - Math.cos(this.lookRadian) * acceleration
-            addVelocityY = - Math.sin(this.lookRadian) * acceleration
-            
-            
-            player.velocity.x = addVelocityX
-            player.velocity.y = addVelocityY
-            console.log(addVelocityX, addVelocityY)
-        }
-        else {
-            console.log("no shots left")
+    shoot() {
+        if (this.shotsLeft > 0) {
+            // Deduct a shot and trigger player recoil
+            this.shotsLeft--;
+            let acceleration = 15;
+            let addVelocityX = -Math.cos(this.lookRadian) * acceleration;
+            let addVelocityY = -Math.sin(this.lookRadian) * acceleration;
+
+            player.velocity.x = addVelocityX;
+            player.velocity.y = addVelocityY;
+
+            if (this.isReloading) {
+                // Mid-reload shooting resets reload process
+                console.log("Reload interrupted! Resetting reload.");
+                this.isReloading = true;
+                this.reloadCycles = 0;
+                this.partialReload = true;
+                this.shotsLeft = 0;
+            }
+        } else {
+            console.log("No shots left! Wait for reload.");
         }
     }
 
     update() {
         this.updateFrames();
-    
-        
-        const offsetX = 70;
-        const offsetY = 40;
-    
+
+        // Only start reloading when grounded
+        if (this.shotsLeft === 0 && player.isGrounded && !this.isReloading) {
+            this.isReloading = true;
+            this.reloadCycles = 0; // Reset reload cycles
+        }
+
+        if (this.isReloading) {
+            this.reload();
+        } else if (!shotgunFX.isShooting && this.shotsLeft > 0) {
+            this.switchSprite("Idle");
+        }
+
+        let offsetX = 70;
+        let offsetY = 40;
+
         this.position = {
             x: player.position.x + offsetX + 3,
             y: player.position.y + offsetY - player.velocity.y + 43
         };
-    
+
         this.drawSpriteLookat(this.image, this.position.x, this.position.y, mouse_X, mouse_Y);
     }
-    
+
+    reload() {
+        if (!player.isGrounded) {
+            // Prevent reload if the player is midair
+            console.log("Cannot reload while midair!");
+            this.isReloading = false;
+            return;
+        }
+
+        this.switchSprite("Reload");
+        this.frameBuffer = this.animations["Reload"].frameBuffer;
+    }
 
     updateFrames() {
         this.elapsedFrames++;
@@ -86,6 +139,17 @@ class Shotgun {
             if (this.currentFrame < this.frameRate - 1) {
                 this.currentFrame++;
             } else {
+                if (this.isReloading) {
+                    this.reloadCycles++;
+                    this.shotsLeft++; // Add one shot per reload cycle
+                    console.log(`Shot added! Shots left: ${this.shotsLeft}`);
+
+                    if (this.shotsLeft >= this.maxShots || this.reloadCycles >= this.targetReloadCycles) {
+                        this.isReloading = false; // Stop reloading when fully reloaded
+                        this.partialReload = false;
+                        console.log("Reload complete.");
+                    }
+                }
                 this.currentFrame = 0;
             }
         }

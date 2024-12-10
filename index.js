@@ -59,6 +59,23 @@ const shotgun = new Shotgun({
     },
     imageSrc: "./assets/images/shotgun/Weapon/idle.png",
     frameRate: 15,
+    animations: {
+        Idle: {
+            imageSrc: "./assets/images/shotgun/Weapon/idle.png",
+            frameRate: 15,
+            frameBuffer: 5
+        },
+        Shoot: {
+            imageSrc: "./assets/images/shotgun/Weapon/shooting_chamber_opened.png",
+            frameRate: 14,
+            frameBuffer: 3
+        },
+        Reload: {
+            imageSrc: "./assets/images/shotgun/FX/Reload.png",
+            frameRate: 14,
+            frameBuffer: 3
+        }
+    },
 })
 const shotgunFX = new ShotgunFX({
     position: {
@@ -66,7 +83,18 @@ const shotgunFX = new ShotgunFX({
         y: 0,
     },
     imageSrc: "./assets/images/shotgun/FX/muzzle_flash.png",
-    frameRate: 14
+    frameRate: 14,
+    animations: {
+        Flash: {
+            imageSrc: "./assets/images/shotgun/FX/muzzle_flash.png",
+            frameRate: 14
+        },
+        Shell: {
+            imageSrc: "./assets/images/shotgun/FX/[SHOOTING_SHELL_01] Shotgun_V1.02.png",
+            framerate: 14
+        }
+    }
+    
 })
 
 
@@ -129,16 +157,26 @@ animate()
 
 
 window.addEventListener("click", (event) => {
-    shotgun.shoot()
-    shotgunFX.startShooting()
+    if (shotgun.shotsLeft > 0) { 
+        shotgunFX.startShooting();
+        shotgun.shoot();
+        shotgun.switchSprite("Shoot")
+    } else {
+        console.log("No shots left");
+    }
 });
 
 window.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
-        shotgun.shoot()
-        shotgunFX.startShooting()
+        if (shotgun.shotsLeft > 0) {
+            shotgunFX.startShooting()
+            shotgun.shoot()
+            shotgun.switchSprite("Shoot")
+        } else {
+            console.log("No shots left")
+        }
     }
-})
+});
 
 window.addEventListener("keydown", (event) => {
     switch (event.key) {

@@ -1,18 +1,22 @@
 class ShotgunFX {
-    constructor({ position, imageSrc, frameRate }) {
-        this.image = new Image();
-        this.image.onload = () => {
-            this.width = this.image.width / this.frameRate;
-            this.height = this.image.height;
-        };
-        this.image.src = imageSrc;
+    constructor({ position, imageSrc, frameRate, animations }) {
         this.frameRate = frameRate;
         this.currentFrame = 0;
         this.frameBuffer = 3;
         this.elapsedFrames = 0;
         this.position = position;
-        this.isShooting = false; // New flag
+        this.isShooting = false;
+        this.animations = animations; // Correctly assign animations from the input
+        
+        for (let key in this.animations) {
+            const image = new Image();
+            image.src = this.animations[key].imageSrc;
+
+            this.animations[key].image = image; // Preload images for animations
+        }
     }
+
+    
     
     drawSpriteLookat(img, x, y, lookx, looky) {
         const cropbox = {
@@ -51,7 +55,23 @@ class ShotgunFX {
                 y: shotgun.position.y,
             };
     
-            this.drawSpriteLookat(this.image, this.position.x, this.position.y, mouse_X, mouse_Y);
+            this.drawSpriteLookat(
+                this.animations["Flash"].image, 
+                this.position.x,
+                this.position.y,
+                mouse_X,
+                mouse_Y
+            );
+            
+            this.drawSpriteLookat(
+                this.animations["Shell"].image, 
+                this.position.x,
+                this.position.y,
+                mouse_X,
+                mouse_Y
+            )
+                
+            
         }
     }
     
@@ -65,6 +85,7 @@ class ShotgunFX {
                 this.isShooting = false; // Stop the animation when it's complete
             }
         }
+        
     }
     
     startShooting() {
