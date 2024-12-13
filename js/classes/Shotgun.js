@@ -5,14 +5,14 @@ class Shotgun {
             this.width = this.image.width / this.frameRate;
             this.height = this.image.height;
         };
-        this.image.src = imageSrc;
-        this.frameRate = frameRate;
-        this.currentFrame = 0;
-        this.frameBuffer = 5;
-        this.elapsedFrames = 0;
-        this.position = position;
-        this.degrees = 90;
-        this.lookRadian;
+        this.image.src = imageSrc; // Animation source
+        this.frameRate = frameRate; // Animation framerate
+        this.currentFrame = 0; // Current frame of sprite
+        this.frameBuffer = 5; // Speed of animation (faster if frameBuffer low)
+        this.elapsedFrames = 0; // Frame counter
+        this.position = position; // Position x, y
+        this.degrees = 90; // For calculating rotation to mouse
+        this.lookRadian; // Same as above...
         this.shotsLeft = 0; // Start with no shots loaded
         this.maxShots = 2; // Maximum shots after reload
         this.animations = animations;
@@ -21,6 +21,7 @@ class Shotgun {
         this.targetReloadCycles = 2; // Reload completes after this many cycles
         this.partialReload = false; // Tracks if mid-reload shooting happens
 
+        // Creating image object for each animation
         for (let key in this.animations) {
             const image = new Image();
             image.src = this.animations[key].imageSrc;
@@ -84,14 +85,14 @@ class Shotgun {
 
             if (this.isReloading) {
                 // Mid-reload shooting resets reload process
-                console.log("Reload interrupted! Resetting reload.");
+                //console.log("Reload interrupted! Resetting reload.");
                 this.isReloading = true;
                 this.reloadCycles = 0;
                 this.partialReload = true;
                 this.shotsLeft = 0;
             }
         } else {
-            console.log("No shots left! Wait for reload.");
+            //console.log("No shots left! Wait for reload.");
         }
     }
 
@@ -124,7 +125,7 @@ class Shotgun {
     reload() {
         if (!player.isGrounded) {
             // Prevent reload if the player is midair
-            console.log("Cannot reload while midair!");
+            //console.log("Cannot reload while midair!");
             this.isReloading = false;
             return;
         }
@@ -142,12 +143,12 @@ class Shotgun {
                 if (this.isReloading) {
                     this.reloadCycles++;
                     this.shotsLeft++; // Add one shot per reload cycle
-                    console.log(`Shot added! Shots left: ${this.shotsLeft}`);
+                    // console.log(`Shot added! Shots left: ${this.shotsLeft}`);
 
                     if (this.shotsLeft >= this.maxShots || this.reloadCycles >= this.targetReloadCycles) {
                         this.isReloading = false; // Stop reloading when fully reloaded
                         this.partialReload = false;
-                        console.log("Reload complete.");
+                        // console.log("Reload complete.");
                     }
                 }
                 this.currentFrame = 0;

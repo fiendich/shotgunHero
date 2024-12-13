@@ -5,6 +5,8 @@ const CANVAS_WIDTH = canvas.width = 700; //set your canvas width...
 const CANVAS_HEIGHT = canvas.height = 860;
 
 const collisionBlocks1 = []
+const collisionBlocks2 = []
+//const collisionBlocks3 = []
 
 floor1Collisions.forEach((row, y) => {
     row.forEach((symbol, x) => {
@@ -22,19 +24,52 @@ floor1Collisions.forEach((row, y) => {
 })
 
 
-
-
+floor2Collisions.forEach((row, y) => {
+    row.forEach((symbol, x) => {
+        if (symbol != 0) {
+            collisionBlocks2.push(
+                new CollisionBlock({
+                    position: {
+                        x: x * 20,
+                        y: y * 20
+                    }
+                })
+            )
+        }
+    })
+})
 
 
 const GRAVITY = 0.5
 const TRACTIONX = 1
+
+
+const currentFloor = new Floor({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: "assets/images/floors/floor1.png",
+    floors: {
+        Floor1: {
+            imageSrc: "assets/images/floors/floor1.png",
+            frameRate: 1,
+        },
+        Floor2: {
+            imageSrc: "assets/images/floors/floor2.png",
+            frameRate: 1,
+        },
+    },
+    collisions: [collisionBlocks1, collisionBlocks2],
+});
+
 
 const player = new Player({
     position: {
         x: 300,
         y: 400,
     },
-    collisionBlocks: collisionBlocks1,
+    collisionBlocks: currentFloor.currentCollisions,
     imageSrc: "./assets/images/character/stop.png",
     animations: {
         Idle: {
@@ -77,6 +112,7 @@ const shotgun = new Shotgun({
         }
     },
 })
+
 const shotgunFX = new ShotgunFX({
     position: {
         x: 0,
@@ -96,7 +132,6 @@ const shotgunFX = new ShotgunFX({
     }
     
 })
-
 
 const keys = {
     d: {
@@ -125,7 +160,6 @@ window.addEventListener('mousemove', (e) => {
     mouse_X = e.clientX - canvasRect.left;
     mouse_Y = e.clientY - canvasRect.top;
 
-    // Optional: Log for debugging
     // console.log(`Mouse Canvas Position: (${mouse_X}, ${mouse_Y})`);
 });
 
@@ -135,12 +169,13 @@ function animate() {
 
     window.requestAnimationFrame(animate)
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
-    background.update()
+    currentFloor.update_all()
+    /*
     collisionBlocks1.forEach(collisionBlock => {
         collisionBlock.update()
     })
-
-    
+        */
+    //console.log(player.position)
     player.update()
     shotgun.update()
     shotgunFX.update()
@@ -148,9 +183,6 @@ function animate() {
     if (keys.d.pressed) {
         player.velocity.x = 7}
         else if (keys.a.pressed) player.velocity.x = -7
-    //console.log(mouse_X, mouse_Y);
-
-
 }
 animate()
 

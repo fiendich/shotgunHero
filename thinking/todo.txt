@@ -1,0 +1,14 @@
+- Collision maps for floors 2-(5/6)?
+
+- Floor change mechanic
+
+- Floor specific mechanics (Ice, darkness etc.)
+
+- User interface
+    - Shots in chamber visualisation
+    - Controls guide
+    - idk something else
+    - HTML elements
+        - Box
+        - Tabelle
+        - Overflow
