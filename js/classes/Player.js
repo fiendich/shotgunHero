@@ -148,6 +148,7 @@ class Player extends Sprite {
         else {
             this.velocity.x += TRACTIONX * groundedMultiplier;
         }
+        
     }
     
         

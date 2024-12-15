@@ -6,7 +6,7 @@ class Floor extends Sprite {
         this.floors = floors
         this.collisions = collisions
         this.currentCollisions = collisions[0]
-        this.floorKeys = ["Floor1", "Floor2"]
+        this.floorKeys = ["Floor1", "Floor2", "Floor3"]
 
         for (let key in this.floors) {
             const image = new Image()
@@ -38,6 +38,8 @@ class Floor extends Sprite {
     }
     else if (player.position.y > player.height + canvas.height) {
         this.floorNumber--
+        player.position.y = 0
+        player.collisionBlocks = this.collisions[this.floorNumber]
     }
     let keyy = this.floorKeys[this.floorNumber]
     this.switchFloor(keyy)

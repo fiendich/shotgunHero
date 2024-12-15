@@ -75,6 +75,7 @@ class Shotgun {
     shoot() {
         if (this.shotsLeft > 0) {
             // Deduct a shot and trigger player recoil
+            player.isGrounded = false
             this.shotsLeft--;
             let acceleration = 15;
             let addVelocityX = -Math.cos(this.lookRadian) * acceleration;
@@ -100,9 +101,9 @@ class Shotgun {
         this.updateFrames();
 
         // Only start reloading when grounded
-        if (this.shotsLeft === 0 && player.isGrounded && !this.isReloading) {
-            this.isReloading = true;
-            this.reloadCycles = 0; // Reset reload cycles
+        if (player.isGrounded && this.shotsLeft != this.targetReloadCycles && !this.isReloading) {
+            this.isReloading = true
+            this.reloadCycles = this.targetReloadCycles - this.shotsLeft;
         }
 
         if (this.isReloading) {

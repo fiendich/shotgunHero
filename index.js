@@ -6,7 +6,7 @@ const CANVAS_HEIGHT = canvas.height = 860;
 
 const collisionBlocks1 = []
 const collisionBlocks2 = []
-//const collisionBlocks3 = []
+const collisionBlocks3 = []
 
 floor1Collisions.forEach((row, y) => {
     row.forEach((symbol, x) => {
@@ -23,11 +23,25 @@ floor1Collisions.forEach((row, y) => {
     })
 })
 
-
 floor2Collisions.forEach((row, y) => {
     row.forEach((symbol, x) => {
         if (symbol != 0) {
             collisionBlocks2.push(
+                new CollisionBlock({
+                    position: {
+                        x: x * 20,
+                        y: y * 20
+                    }
+                })
+            )
+        }
+    })
+})
+
+floor3Collisions.forEach((row, y) => {
+    row.forEach((symbol, x) => {
+        if (symbol != 0) {
+            collisionBlocks3.push(
                 new CollisionBlock({
                     position: {
                         x: x * 20,
@@ -59,8 +73,12 @@ const currentFloor = new Floor({
             imageSrc: "assets/images/floors/floor2.png",
             frameRate: 1,
         },
+        Floor3: {
+            imageSrc: "assets/images/floors/floor3.png",
+            frameRate: 1,
+        },
     },
-    collisions: [collisionBlocks1, collisionBlocks2],
+    collisions: [collisionBlocks1, collisionBlocks2, collisionBlocks3],
 });
 
 
@@ -108,7 +126,7 @@ const shotgun = new Shotgun({
         Reload: {
             imageSrc: "./assets/images/shotgun/FX/Reload.png",
             frameRate: 14,
-            frameBuffer: 3
+            frameBuffer: 2
         }
     },
 })
@@ -133,6 +151,7 @@ const shotgunFX = new ShotgunFX({
     
 })
 
+// Movement for testing 
 const keys = {
     d: {
         pressed: false,
@@ -176,6 +195,7 @@ function animate() {
     })
         */
     //console.log(player.position)
+    console.log(player.isGrounded)
     player.update()
     shotgun.update()
     shotgunFX.update()
@@ -210,6 +230,7 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
+// Movement for testing
 window.addEventListener("keydown", (event) => {
     switch (event.key) {
         case "d":
