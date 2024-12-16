@@ -4,54 +4,35 @@ const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = canvas.width = 700; //set your canvas width...
 const CANVAS_HEIGHT = canvas.height = 860;
 
-const collisionBlocks1 = []
-const collisionBlocks2 = []
-const collisionBlocks3 = []
+const collisionBlocks = [[], [], [], []]; // Array of arrays for different floors
 
-floor1Collisions.forEach((row, y) => {
-    row.forEach((symbol, x) => {
-        if (symbol != 0) {
-            collisionBlocks1.push(
-                new CollisionBlock({
-                    position: {
-                        x: x * 20,
-                        y: y * 20
-                    }
-                })
-            )
+// Function to populate collision blocks for a given floor
+function populateCollisionBlocks(floorCollisions, collisionBlocksArray) {
+    floorCollisions.forEach((row, y) => {
+        if (!Array.isArray(row)) {
+            console.warn(`Invalid row at index ${y}:`, row);
+            return; // Skip invalid rows
         }
-    })
-})
+        row.forEach((symbol, x) => {
+            if (symbol != 0) {
+                collisionBlocksArray.push(
+                    new CollisionBlock({
+                        position: {
+                            x: x * 20,
+                            y: y * 20
+                        }
+                    })
+                );
+            }
+        });
+    });
+}
+// Call the function for each floor
+populateCollisionBlocks(floor1Collisions, collisionBlocks[0]);
+populateCollisionBlocks(floor2Collisions, collisionBlocks[1]);
+populateCollisionBlocks(floor3Collisions, collisionBlocks[2]);
+populateCollisionBlocks(floor4Collisions, collisionBlocks[3]);
 
-floor2Collisions.forEach((row, y) => {
-    row.forEach((symbol, x) => {
-        if (symbol != 0) {
-            collisionBlocks2.push(
-                new CollisionBlock({
-                    position: {
-                        x: x * 20,
-                        y: y * 20
-                    }
-                })
-            )
-        }
-    })
-})
-
-floor3Collisions.forEach((row, y) => {
-    row.forEach((symbol, x) => {
-        if (symbol != 0) {
-            collisionBlocks3.push(
-                new CollisionBlock({
-                    position: {
-                        x: x * 20,
-                        y: y * 20
-                    }
-                })
-            )
-        }
-    })
-})
 
 
 const GRAVITY = 0.5
@@ -77,8 +58,12 @@ const currentFloor = new Floor({
             imageSrc: "assets/images/floors/floor3.png",
             frameRate: 1,
         },
+        Floor4: {
+            imageSrc: "assets/images/floors/floor4.png",
+            frameRate: 1,
+        }
     },
-    collisions: [collisionBlocks1, collisionBlocks2, collisionBlocks3],
+    collisions: collisionBlocks,
 });
 
 
@@ -207,6 +192,33 @@ function animate() {
 animate()
 
 
+// Movement for testing
+window.addEventListener("keydown", (event) => {
+    console.log(`Key down: ${event.key}`);
+    switch (event.key) {
+        case "d":
+            keys.d.pressed = true;
+            break;
+        case "a":
+            keys.a.pressed = true;
+            break;
+        case "w":
+            player.velocity.y = -20;
+            break;
+    }
+});
+
+window.addEventListener("keyup", (event) => {
+    console.log(`Key up: ${event.key}`);
+    switch (event.key) {
+        case "d":
+            keys.d.pressed = false;
+            break;
+        case "a":
+            keys.a.pressed = false;
+            break;
+    }
+})
 
 window.addEventListener("click", (event) => {
     if (shotgun.shotsLeft > 0) { 
@@ -230,31 +242,6 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-// Movement for testing
-window.addEventListener("keydown", (event) => {
-    switch (event.key) {
-        case "d":
-            keys.d.pressed = true
-            break
-        case "a":
-            keys.a.pressed = true
-            break
-        case "w":
-            player.velocity.y = -20
-            break
-    }
-})
-
-window.addEventListener("keyup", (event) => {
-    switch (event.key) {
-        case "d":
-            keys.d.pressed = false
-            break
-        case "a":
-            keys.a.pressed = false
-            break
-    }
-})
 
 
 

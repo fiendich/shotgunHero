@@ -27,7 +27,24 @@ class Shotgun {
             image.src = this.animations[key].imageSrc;
             this.animations[key].image = image;
         }
+        
     }
+
+    // Function to update shell visibility
+    updateShellVisibility() {
+        const shell1 = document.getElementById("shell1");
+        const shell2 = document.getElementById("shell2");
+    
+        if (!shell1 || !shell2) {
+            console.error("Shotgun shell elements not found.");
+            return; // Prevent further execution
+        }
+    
+        // Update visibility logic
+        shell1.style.visibility = this.shotsLeft > 0 ? "visible" : "hidden";
+        shell2.style.visibility = this.shotsLeft > 1 ? "visible" : "hidden";
+    }
+    
 
     switchSprite(key) {
         if (!this.animations[key]) {
@@ -72,37 +89,36 @@ class Shotgun {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 
+    
     shoot() {
         if (this.shotsLeft > 0) {
-            // Deduct a shot and trigger player recoil
-            player.isGrounded = false
             this.shotsLeft--;
+            // Update shell visibility after shooting
+            this.updateShellVisibility();
+            
+            // Player recoil logic...
+            player.isGrounded = false;
             let acceleration = 15;
             let addVelocityX = -Math.cos(this.lookRadian) * acceleration;
             let addVelocityY = -Math.sin(this.lookRadian) * acceleration;
-
             player.velocity.x = addVelocityX;
             player.velocity.y = addVelocityY;
-
+            
             if (this.isReloading) {
-                // Mid-reload shooting resets reload process
-                //console.log("Reload interrupted! Resetting reload.");
                 this.isReloading = true;
                 this.reloadCycles = 0;
                 this.partialReload = true;
                 this.shotsLeft = 0;
             }
-        } else {
-            //console.log("No shots left! Wait for reload.");
         }
     }
 
     update() {
         this.updateFrames();
 
-        // Only start reloading when grounded
-        if (player.isGrounded && this.shotsLeft != this.targetReloadCycles && !this.isReloading) {
-            this.isReloading = true
+        // Reloading logic...
+        if (player.isGrounded && this.shotsLeft !== this.targetReloadCycles && !this.isReloading) {
+            this.isReloading = true;
             this.reloadCycles = this.targetReloadCycles - this.shotsLeft;
         }
 
@@ -111,6 +127,9 @@ class Shotgun {
         } else if (!shotgunFX.isShooting && this.shotsLeft > 0) {
             this.switchSprite("Idle");
         }
+
+        // Update shell visibility while reloading
+        this.updateShellVisibility();
 
         let offsetX = 70;
         let offsetY = 40;

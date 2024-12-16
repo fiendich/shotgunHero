@@ -1,9 +1,10 @@
-body {
-    background-color: lightblue; 
+html, body {
+    height: 100%;
     margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-#canvas2 {
+body {
     background-color: lightblue; 
     margin: 0;
 }
@@ -17,4 +18,41 @@ body {
     width: 700px;
     height: 860px;
     background-color: white; 
+    max-width: 100%;
+}
+
+#shotgun-shells {
+    position: absolute;
+    top: 82%;
+    left: 22%;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.shell {
+    width: 100px;
+    height: 70px;
+    background-image: url('/assets/images/shotgun/FX/shell.png');
+    background-size: cover;
+    visibility: visible; 
+    margin-bottom: -20px;
+    z-index: 2; 
+}
+
+#shell-shadow {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    z-index: 1; 
+}
+
+.shell-sh {
+    width: 100px;
+    height: 70px;
+    background-image: url('/assets/images/shotgun/FX/shell_shadow.png');
+    background-size: cover;
+    visibility: visible;
+    margin-bottom: -20px;
 }
