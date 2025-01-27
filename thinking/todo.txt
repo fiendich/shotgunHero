@@ -1,18 +1,20 @@
 - Collision maps for floors 2-(5/6)?
 
-- Floor change mechanic
+- Floor change mechanic !
 
-- Floor specific mechanics (Ice, darkness etc.)
+- Floor specific mechanics (Ice, darkness etc.) !
+
+- Last floor interaction??? 
 
 - User interface
-    - Shots in chamber visualisation
-    - Controls guide
+    - Shots in chamber visualisation !
+    - Controls guide !
     - idk something else
     - HTML elements
         - Box
         - Tabelle
-        - List
-        - IDs
-        - Classes
-        - Overflow
-        - Hyperlink
+        - List 
+        - IDs !
+        - Classes !
+        - Overflow 
+        - Hyperlink ! 

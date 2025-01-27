@@ -1,10 +1,10 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
-const CANVAS_WIDTH = canvas.width = 700; //set your canvas width...
+const CANVAS_WIDTH = canvas.width = 700;
 const CANVAS_HEIGHT = canvas.height = 860;
 
-const collisionBlocks = [[], [], [], []]; // Array of arrays for different floors
+const collisionBlocks = [[], [], [], [], []]; // Array of arrays for different floors
 
 // Function to populate collision blocks for a given floor
 function populateCollisionBlocks(floorCollisions, collisionBlocksArray) {
@@ -32,6 +32,7 @@ populateCollisionBlocks(floor1Collisions, collisionBlocks[0]);
 populateCollisionBlocks(floor2Collisions, collisionBlocks[1]);
 populateCollisionBlocks(floor3Collisions, collisionBlocks[2]);
 populateCollisionBlocks(floor4Collisions, collisionBlocks[3]);
+populateCollisionBlocks(floor5Collisions, collisionBlocks[4]);
 
 
 
@@ -60,6 +61,10 @@ const currentFloor = new Floor({
         },
         Floor4: {
             imageSrc: "assets/images/floors/floor4.png",
+            frameRate: 1,
+        },
+        Floor5: {
+            imageSrc: "assets/images/floors/floor5.png",
             frameRate: 1,
         }
     },
@@ -179,8 +184,8 @@ function animate() {
         collisionBlock.update()
     })
         */
-    //console.log(player.position)
-    console.log(player.isGrounded)
+    // console.log(player.position)
+    // console.log(player.isGrounded)
     player.update()
     shotgun.update()
     shotgunFX.update()
@@ -194,7 +199,7 @@ animate()
 
 // Movement for testing
 window.addEventListener("keydown", (event) => {
-    console.log(`Key down: ${event.key}`);
+    // console.log(`Key down: ${event.key}`);
     switch (event.key) {
         case "d":
             keys.d.pressed = true;
@@ -209,7 +214,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("keyup", (event) => {
-    console.log(`Key up: ${event.key}`);
+    // console.log(`Key up: ${event.key}`);
     switch (event.key) {
         case "d":
             keys.d.pressed = false;

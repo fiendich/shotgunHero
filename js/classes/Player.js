@@ -45,7 +45,7 @@ class Player extends Sprite {
         
         this.updateFrames()
         this.updateHitbox()
-
+        /*
         ctx.fillStyle = "rgba(0, 255, 0, 0.2)"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 
@@ -56,14 +56,14 @@ class Player extends Sprite {
             this.hitbox.width,
             this.hitbox.height
         )
+            */
         
         this.draw()
-        
         
         this.position.x += this.velocity.x
         this.updateHitbox()
         this.checkForHorizontalCollisions()
-        if (this.velocity.y > 1){
+        if (this.velocity.y > 1) {
             this.isGrounded = false
         }
         if (this.isGrounded) {
@@ -134,10 +134,14 @@ class Player extends Sprite {
     }
 
     applyTractionX() {
-        //console.log(this.velocity.x);
+        // console.log(this.velocity.x);
         
-        let groundedMultiplier = this.isGrounded ? 0.6 : 0.1;
-    
+        let groundedMultiplier = this.isGrounded ? 0.6 : 0.125;
+        
+        if (currentFloor.floorNumber === 4) {
+            groundedMultiplier = this.isGrounded ? 0.02 : 0.125
+            console.log(groundedMultiplier)
+        }
         if (Math.abs(this.velocity.x) <= TRACTIONX * groundedMultiplier) {
             this.velocity.x = 0;
         }

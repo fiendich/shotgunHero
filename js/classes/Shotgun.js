@@ -30,17 +30,17 @@ class Shotgun {
         
     }
 
-    // Function to update shell visibility
+    // Update visibility
     updateShellVisibility() {
         const shell1 = document.getElementById("shell1");
         const shell2 = document.getElementById("shell2");
     
         if (!shell1 || !shell2) {
             console.error("Shotgun shell elements not found.");
-            return; // Prevent further execution
+            return; 
         }
     
-        // Update visibility logic
+       
         shell1.style.visibility = this.shotsLeft > 0 ? "visible" : "hidden";
         shell2.style.visibility = this.shotsLeft > 1 ? "visible" : "hidden";
     }

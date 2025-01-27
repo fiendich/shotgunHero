@@ -6,7 +6,7 @@ class Floor extends Sprite {
         this.floors = floors
         this.collisions = collisions
         this.currentCollisions = collisions[0]
-        this.floorKeys = ["Floor1", "Floor2", "Floor3", "Floor4"]
+        this.floorKeys = ["Floor1", "Floor2", "Floor3", "Floor4", "Floor5"]
 
         for (let key in this.floors) {
             const image = new Image()
@@ -15,12 +15,13 @@ class Floor extends Sprite {
             this.floors[key].image = image
             
         }
-    }
+    }   
 
     switchFloor(key) {
         if (this.image === this.floors[key].image){
             return
         } 
+        console.log(this.floors[key].image)
         this.frameRate = this.floors[key].frameRate
         this.image = this.floors[key].image
         this.currentFrame = 0
@@ -29,7 +30,7 @@ class Floor extends Sprite {
 
     
     update_all() {
-        //console.log(this.floorNumber)
+        // console.log(this.floorNumber)
         this.update()
     if (player.position.y < -player.height) {
         this.floorNumber++

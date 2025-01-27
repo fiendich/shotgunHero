@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow: hidden; 
 }
 
 body {
@@ -55,4 +55,23 @@ body {
     background-size: cover;
     visibility: visible;
     margin-bottom: -20px;
+}
+
+#tutorial1 {
+    position: absolute;
+    top: 375px;
+    right: 100px;
+}
+
+#tutorial2 {
+    position: absolute;
+    top: 675px;
+    right: 100px;
+}
+
+#credits {
+    font-size: large;
+    position: absolute;
+    right: 100px;
+    top: 50px;
 }
