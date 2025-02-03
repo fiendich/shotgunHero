@@ -30,20 +30,32 @@ class Floor extends Sprite {
 
     
     update_all() {
-        // console.log(this.floorNumber)
-        this.update()
-    if (player.position.y < -player.height) {
-        this.floorNumber++
-        player.position.y = canvas.height - player.height
-        player.collisionBlocks = this.collisions[this.floorNumber]
+        this.update();
+    
+        if (player.position.y < -player.height) {
+            this.floorNumber++;
+    
+            if (this.floorNumber >= 5) {
+                player.position.y = 0;
+                setTimeout(() => {
+                    window.location.href = 'credit.html';
+                }, 50);
+                return;
+            }
+    
+            player.position.y = canvas.height - player.height;
+            player.collisionBlocks = this.collisions[this.floorNumber];
+        } 
+        else if (player.position.y > player.height + canvas.height) {
+            this.floorNumber--;
+            player.position.y = 0;
+            player.collisionBlocks = this.collisions[this.floorNumber];
+        }
+    
+        if (this.floorNumber != 5) {
+            let keyy = this.floorKeys[this.floorNumber];
+            this.switchFloor(keyy);
+        }
     }
-    else if (player.position.y > player.height + canvas.height) {
-        this.floorNumber--
-        player.position.y = 0
-        player.collisionBlocks = this.collisions[this.floorNumber]
-    }
-    let keyy = this.floorKeys[this.floorNumber]
-    this.switchFloor(keyy)
-
-    }
+    
 }

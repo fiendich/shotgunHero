@@ -140,7 +140,7 @@ const shotgunFX = new ShotgunFX({
     }
     
 })
-
+/*
 // Movement for testing 
 const keys = {
     d: {
@@ -150,6 +150,7 @@ const keys = {
         pressed: false,
     },
 }
+    */
 
 const background = new Sprite({
     position: {
@@ -189,14 +190,15 @@ function animate() {
     player.update()
     shotgun.update()
     shotgunFX.update()
-    
+    /*
     if (keys.d.pressed) {
         player.velocity.x = 7}
         else if (keys.a.pressed) player.velocity.x = -7
+    */
 }
 animate()
 
-
+/*
 // Movement for testing
 window.addEventListener("keydown", (event) => {
     // console.log(`Key down: ${event.key}`);
@@ -224,16 +226,17 @@ window.addEventListener("keyup", (event) => {
             break;
     }
 })
-
-window.addEventListener("click", (event) => {
+*/
+window.addEventListener("click", () => {
     if (shotgun.shotsLeft > 0) { 
-        shotgunFX.startShooting();
-        shotgun.shoot();
+        shotgunFX.startShooting()
+        shotgun.shoot()
         shotgun.switchSprite("Shoot")
     } else {
-        console.log("No shots left");
+        console.log("No shots left")
     }
-});
+})
+
 
 window.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
