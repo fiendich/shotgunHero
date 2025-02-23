@@ -6,6 +6,7 @@ class CollisionBlock {
         this.collisionList = collisionList
     }
     /*
+    // Show collision blocks
     draw() {
         ctx.fillStyle = "rgba(255, 0, 0, 0.5)"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)

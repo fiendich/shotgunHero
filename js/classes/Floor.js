@@ -16,7 +16,7 @@ class Floor extends Sprite {
             
         }
     }   
-
+    // Floor swap
     switchFloor(key) {
         if (this.image === this.floors[key].image){
             return

@@ -46,6 +46,7 @@ class Player extends Sprite {
         this.updateFrames()
         this.updateHitbox()
         /*
+        // Visualize hitbox
         ctx.fillStyle = "rgba(0, 255, 0, 0.2)"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 

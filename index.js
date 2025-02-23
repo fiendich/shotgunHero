@@ -1,3 +1,4 @@
+// Initializing canvas
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
@@ -6,7 +7,7 @@ const CANVAS_HEIGHT = canvas.height = 860;
 
 const collisionBlocks = [[], [], [], [], []]; // Array of arrays for different floors
 
-// Function to populate collision blocks for a given floor
+// Populating collision blocks for a given floor
 function populateCollisionBlocks(floorCollisions, collisionBlocksArray) {
     floorCollisions.forEach((row, y) => {
         if (!Array.isArray(row)) {
@@ -27,6 +28,7 @@ function populateCollisionBlocks(floorCollisions, collisionBlocksArray) {
         });
     });
 }
+
 // Call the function for each floor
 populateCollisionBlocks(floor1Collisions, collisionBlocks[0]);
 populateCollisionBlocks(floor2Collisions, collisionBlocks[1]);
@@ -35,11 +37,11 @@ populateCollisionBlocks(floor4Collisions, collisionBlocks[3]);
 populateCollisionBlocks(floor5Collisions, collisionBlocks[4]);
 
 
-
+// Gravity and x-axis traction 
 const GRAVITY = 0.5
 const TRACTIONX = 1
 
-
+// Creating floor object
 const currentFloor = new Floor({
     position: {
         x: 0,
@@ -71,7 +73,7 @@ const currentFloor = new Floor({
     collisions: collisionBlocks,
 });
 
-
+// Creating player object
 const player = new Player({
     position: {
         x: 300,
@@ -95,6 +97,7 @@ const player = new Player({
     },
 })
 
+// Creating shotgun object
 const shotgun = new Shotgun({
     position: {
         x: 0,
@@ -121,6 +124,7 @@ const shotgun = new Shotgun({
     },
 })
 
+// Creating shotgunFX object 
 const shotgunFX = new ShotgunFX({
     position: {
         x: 0,
@@ -152,6 +156,7 @@ const keys = {
 }
     */
 
+// Creating background sprite object
 const background = new Sprite({
     position: {
         x: 0,
@@ -159,7 +164,7 @@ const background = new Sprite({
     },
     imageSrc: "assets/images/floors/floor1.png",  
 })
-
+// Mouse position variables 
 let mouse_X, mouse_Y;
 
 // Get canvas position relative to the viewport
@@ -180,11 +185,6 @@ function animate() {
     window.requestAnimationFrame(animate)
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
     currentFloor.update_all()
-    /*
-    collisionBlocks1.forEach(collisionBlock => {
-        collisionBlock.update()
-    })
-        */
     // console.log(player.position)
     // console.log(player.isGrounded)
     player.update()
@@ -227,6 +227,8 @@ window.addEventListener("keyup", (event) => {
     }
 })
 */
+
+// Shooting mechanic (mouse)
 window.addEventListener("click", () => {
     if (shotgun.shotsLeft > 0) { 
         shotgunFX.startShooting()
@@ -237,7 +239,7 @@ window.addEventListener("click", () => {
     }
 })
 
-
+// Shooting mechanic (Spacebar)
 window.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
         if (shotgun.shotsLeft > 0) {
