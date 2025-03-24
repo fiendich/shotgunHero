@@ -136,13 +136,18 @@ class Player extends Sprite {
 
     applyTractionX() {
         // console.log(this.velocity.x);
-        
+        console.log(this.velocity.x)
         let groundedMultiplier = this.isGrounded ? 0.6 : 0.125;
         
         if (currentFloor.floorNumber === 4) {
             groundedMultiplier = this.isGrounded ? 0.02 : 0.125
             console.log(groundedMultiplier)
         }
+
+        if ((this.velocity.x < 0 && this.velocity.x > -2) || (this.velocity.x > 0 && this.velocity.x < 2)) {
+            groundedMultiplier *= 0.3
+        }
+
         if (Math.abs(this.velocity.x) <= TRACTIONX * groundedMultiplier) {
             this.velocity.x = 0;
         }

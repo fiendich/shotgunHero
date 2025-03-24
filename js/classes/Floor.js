@@ -7,7 +7,8 @@ class Floor extends Sprite {
         this.collisions = collisions
         this.currentCollisions = collisions[0]
         this.floorKeys = ["Floor1", "Floor2", "Floor3", "Floor4", "Floor5"]
-
+        
+        //Add image object to every floor
         for (let key in this.floors) {
             const image = new Image()
             image.src = this.floors[key].imageSrc
