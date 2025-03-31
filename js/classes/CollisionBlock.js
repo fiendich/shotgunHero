@@ -1,6 +1,6 @@
 class CollisionBlock {
     constructor({ position, collisionList}) {
-        this.position = position
+        this.position = position 
         this.width = 20
         this.height = 20
         this.collisionList = collisionList

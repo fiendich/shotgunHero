@@ -145,7 +145,7 @@ class Shotgun {
     reload() {
         if (!player.isGrounded) {
             // Prevent reload if the player is midair
-            //console.log("Cannot reload while midair!");
+            // console.log("Cannot reload while midair!");
             this.isReloading = false;
             return;
         }

@@ -42,6 +42,7 @@ class Sprite {
         this.draw()
         this.updateFrames()
     }
+    
     updateFrames() {
         this.elapsedFrames ++
         if (this.elapsedFrames % this.frameBuffer === 0){
