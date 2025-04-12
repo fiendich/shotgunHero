@@ -33,7 +33,7 @@ body {
 .shell {
     width: 100px;
     height: 70px;
-    background-image: url('/assets/images/shotgun/FX/shell.png');
+    background-image: url('assets/images/shotgun/FX/shell.png');
     background-size: cover;
     visibility: visible; 
     margin-bottom: -20px;
@@ -51,7 +51,7 @@ body {
 .shell-sh {
     width: 100px;
     height: 70px;
-    background-image: url('/assets/images/shotgun/FX/shell_shadow.png');
+    background-image: url('assets/images/shotgun/FX/shell_shadow.png');
     background-size: cover;
     visibility: visible;
     margin-bottom: -20px;
