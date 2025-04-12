@@ -8,7 +8,7 @@
 - **5 Unique Floors**: Vertical progression with collision detection.  
 
 ## 🚀 How to Play  
-1. Open `index.html` in a browser  
+1. **Change refresh rate of the monitor to 60hz open** `index.html` in a browser 
 2. Controls:  
    - **Left Click**: Shoot (recoil moves you)  
    - **R**: Reload (when grounded)  
